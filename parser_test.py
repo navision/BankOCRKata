@@ -1,6 +1,11 @@
 import unittest
 from parser import *
 
+FULL_ENTRY = \
+    "    _  _     _  _  _  _  _ \n" + \
+    "  | _| _||_||_ |_   ||_||_|\n" + \
+    "  ||_  _|  | _||_|  ||_| _|\n\n"
+
 class ParserTest(unittest.TestCase):
     def test_parses_all_digits(self):
         self.assertEqual(0, Parser().digit_from(ZERO))
@@ -25,5 +30,10 @@ class ParserTest(unittest.TestCase):
         self.assertEqual(["123", "456", "789"], Parser().chunk("123456789"))
         self.assertEqual(["123", "456", "78"], Parser().chunk("12345678"))
 
+    def test_parsing_full_entry_works(self):
+        self.assertEqual([[1,2,3,4,5,6,7,8,9]], Parser().parse(FULL_ENTRY.splitlines()))
+        self.assertEqual([[1,2,3,4,5,6,7,8,9], [1,2,3,4,5,6,7,8,9]], Parser().parse((FULL_ENTRY * 2).splitlines()))
 
 
+if __name__ == '__main__':
+    unittest.main()
