@@ -1,3 +1,6 @@
+from numbers import Number
+
+
 class AccountNumber(object):
     def __init__(self, digits):
         self.digits = digits
@@ -13,7 +16,17 @@ class AccountNumber(object):
         return result
 
     def is_valid(self):
+        if not self.is_legible(): return False
         return self.checksum() % 11 == 0
+
+    def is_legible(self):
+        for i in self.digits:
+            if not isinstance(i, Number):
+                return False
+        return True
+
+    def as_string(self):
+        return ''.join(map(lambda d: '?' if d is None else str(d), self.digits))
 
     def __eq__(self, other):
         if other.__class__ != self.__class__: return False

@@ -18,3 +18,16 @@ class AccountNumberTest(unittest.TestCase):
         self.assertNotEqual(AccountNumber([0]), None)
         self.assertNotEqual(None, AccountNumber([0]))
         self.assertEqual(AccountNumber([0]), AccountNumber([0]))
+
+    def test_account_number_with_all_digits_is_legible(self):
+        self.assertTrue(AccountNumber([3, 4, 5, 8, 8, 2, 8, 6, 5]).is_legible())
+        self.assertTrue(AccountNumber([9, 9, 9, 9, 9, 9, 9, 9, 9]).is_legible())
+
+    def test_account_number_with_none_is_not_legible(self):
+        self.assertFalse(AccountNumber([None]).is_legible())
+        self.assertFalse(AccountNumber([3, 4, 5, 8, 8, 2, 8, None, 5]).is_legible())
+
+    def test_illegible_account_number_is_also_invalid(self):
+        illegible_number = AccountNumber([3, 4, 5, 8, 8, 2, 8, None, 5])
+        self.assertFalse(illegible_number.is_legible())
+        self.assertFalse(illegible_number.is_valid())
