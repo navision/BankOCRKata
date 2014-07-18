@@ -20,7 +20,7 @@ class ParserTest(unittest.TestCase):
         self.assertEqual(9, Parser().digit_from(NINE))
 
     def test_parses_groups_of_digits(self):
-        self.assertEqual([0, 1, 2, 3, 4, 5, 6, 7, 8, 9], Parser().digits_from((ZERO, ONE, TWO, THREE, FOUR,
+        self.assertEqual(AccountNumber([0, 1, 2, 3, 4, 5, 6, 7, 8, 9]), Parser().account_number_from((ZERO, ONE, TWO, THREE, FOUR,
                                                                                FIVE, SIX, SEVEN, EIGHT, NINE)))
 
     def test_non_digit_bombs(self):
@@ -31,17 +31,11 @@ class ParserTest(unittest.TestCase):
         self.assertEqual(["123", "456", "78"], Parser().chunk("12345678"))
 
     def test_parsing_full_entry_works(self):
-        self.assertEqual([[1, 2, 3, 4, 5, 6, 7, 8, 9]], Parser().parse(FULL_ENTRY.splitlines()))
-        self.assertEqual([[1, 2, 3, 4, 5, 6, 7, 8, 9], [1, 2, 3, 4, 5, 6, 7, 8, 9]], Parser().parse((FULL_ENTRY * 2).splitlines()))
+        self.assertEqual([AccountNumber([1, 2, 3, 4, 5, 6, 7, 8, 9])], Parser().account_numbers_from(FULL_ENTRY.splitlines()))
+        self.assertEqual([AccountNumber([1, 2, 3, 4, 5, 6, 7, 8, 9]),
+                          AccountNumber([1, 2, 3, 4, 5, 6, 7, 8, 9])], Parser().account_numbers_from((FULL_ENTRY * 2).splitlines()))
 
-    def test_valid_account_number_passes_checksum(self):
-        self.assertTrue(is_valid([3, 4, 5, 8, 8, 2, 8, 6, 5]))
-        self.assertTrue(is_valid([4, 5, 7, 5, 0, 8, 0, 0, 0]))
 
-    def test_invalid_account_number_fails_checksum(self):
-        self.assertFalse(is_valid([4, 5, 7, 5, 0, 8, 0, 0, 1]))
-        self.assertFalse(is_valid([3, 4, 5, 8, 8, 2, 8, 6, 6]))
-        self.assertFalse(is_valid([9, 9, 9, 9, 9, 9, 9, 9, 9]))
 
 
 

@@ -1,5 +1,6 @@
 from itertools import izip
 import string
+from account_number import AccountNumber
 
 ZERO = " _ " + \
        "| |" + \
@@ -53,30 +54,21 @@ class Parser(object):
     def digit_from(self, text):
         return NUMBERS_BY_TEXT[text]
 
-    def digits_from(self, text_array):
-        return [self.digit_from(text) for text in text_array]
+    def account_number_from(self, text_array):
+        return AccountNumber([self.digit_from(text) for text in text_array])
 
-    def parse(self, stream):
+    def account_numbers_from(self, stream):
         result = []
         lines = [iter(stream)] * 4
         for line1, line2, line3, _ in izip(*lines):
             joined = izip(self.chunk(line1.rstrip('\n')), self.chunk(line2.rstrip('\n')), self.chunk(line3.rstrip('\n')))
-            result.append(self.digits_from(map(lambda w: string.join(w, ''), list(joined))))
+            result.append(self.account_number_from(map(lambda w: string.join(w, ''), list(joined))))
         return result
 
-def is_valid(acct_number):
-    # dX where X is counted right to left
-    # (d1+2*d2+3*d3 +..+9*d9) mod 11 = 0
-    checksum = 0
-    position = 1
-    while position <= len(acct_number):
-        checksum += (acct_number[-position] * position)
-        print acct_number[-position], '*', position, '=', checksum
-        position += 1
-    return checksum % 11 == 0
+
 
 
 if __name__ == "__main__":
     import fileinput
 
-    print Parser().parse(fileinput.input())
+    print Parser().account_numbers_from(fileinput.input())
