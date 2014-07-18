@@ -21,3 +21,6 @@ class AccountNumber(object):
 
     def __hash__(self):
         return hash(self.digits)
+
+    def __repr__(self):
+        return "AccountNumber(%s)" % self.digits
