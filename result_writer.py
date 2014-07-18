@@ -6,3 +6,7 @@ class ResultWriter(object):
         if not account_number.is_legible(): return "ILL"
         if not account_number.is_valid(): return "ERR"
         return ""
+
+    def write_all(self, stream, account_numbers):
+        for a in account_numbers:
+            print >>stream, self.output_for(a)
