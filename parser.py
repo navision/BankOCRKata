@@ -52,6 +52,7 @@ class Parser(object):
         return [str[i:i+chunk_size] for i in range(0, len(str), chunk_size)]
 
     def digit_from(self, text):
+        if text not in NUMBERS_BY_TEXT: return None
         return NUMBERS_BY_TEXT[text]
 
     def account_number_from(self, text_array):
