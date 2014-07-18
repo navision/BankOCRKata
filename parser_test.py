@@ -31,8 +31,18 @@ class ParserTest(unittest.TestCase):
         self.assertEqual(["123", "456", "78"], Parser().chunk("12345678"))
 
     def test_parsing_full_entry_works(self):
-        self.assertEqual([[1,2,3,4,5,6,7,8,9]], Parser().parse(FULL_ENTRY.splitlines()))
-        self.assertEqual([[1,2,3,4,5,6,7,8,9], [1,2,3,4,5,6,7,8,9]], Parser().parse((FULL_ENTRY * 2).splitlines()))
+        self.assertEqual([[1, 2, 3, 4, 5, 6, 7, 8, 9]], Parser().parse(FULL_ENTRY.splitlines()))
+        self.assertEqual([[1, 2, 3, 4, 5, 6, 7, 8, 9], [1, 2, 3, 4, 5, 6, 7, 8, 9]], Parser().parse((FULL_ENTRY * 2).splitlines()))
+
+    def test_valid_account_number_passes_checksum(self):
+        self.assertTrue(is_valid([3, 4, 5, 8, 8, 2, 8, 6, 5]))
+        self.assertTrue(is_valid([4, 5, 7, 5, 0, 8, 0, 0, 0]))
+
+    def test_invalid_account_number_fails_checksum(self):
+        self.assertFalse(is_valid([4, 5, 7, 5, 0, 8, 0, 0, 1]))
+        self.assertFalse(is_valid([3, 4, 5, 8, 8, 2, 8, 6, 6]))
+        self.assertFalse(is_valid([9, 9, 9, 9, 9, 9, 9, 9, 9]))
+
 
 
 if __name__ == '__main__':

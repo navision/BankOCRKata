@@ -64,6 +64,17 @@ class Parser(object):
             result.append(self.digits_from(map(lambda w: string.join(w, ''), list(joined))))
         return result
 
+def is_valid(acct_number):
+    # dX where X is counted right to left
+    # (d1+2*d2+3*d3 +..+9*d9) mod 11 = 0
+    checksum = 0
+    position = 1
+    while position <= len(acct_number):
+        checksum += (acct_number[-position] * position)
+        print acct_number[-position], '*', position, '=', checksum
+        position += 1
+    return checksum % 11 == 0
+
 
 if __name__ == "__main__":
     import fileinput
