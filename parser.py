@@ -47,9 +47,10 @@ NUMBERS_BY_TEXT = {
     NINE: 9
 }
 
+
 class Parser(object):
-    def chunk(self, str, chunk_size=3):
-        return [str[i:i+chunk_size] for i in range(0, len(str), chunk_size)]
+    def chunk(self, content, chunk_size=3):
+        return [content[i:i+chunk_size] for i in range(0, len(content), chunk_size)]
 
     def digit_from(self, text):
         if text not in NUMBERS_BY_TEXT: return None
@@ -65,8 +66,6 @@ class Parser(object):
             joined = izip(self.chunk(line1.rstrip('\n')), self.chunk(line2.rstrip('\n')), self.chunk(line3.rstrip('\n')))
             result.append(self.account_number_from(map(lambda w: string.join(w, ''), list(joined))))
         return result
-
-
 
 
 if __name__ == "__main__":

@@ -55,7 +55,5 @@ class ParserTest(unittest.TestCase):
             self.assertFalse(numbers[2].is_legible())
 
 
-
-
 if __name__ == '__main__':
     unittest.main()
