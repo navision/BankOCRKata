@@ -1,0 +1,5 @@
+Bank OCR Kata implementation by Nate Austin
+
+usage: ./ocr.py infile outfile
+
+
